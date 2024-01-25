@@ -1,0 +1,87 @@
+<div class="container mt-5">
+    <div *ngIf="step <= 5">
+        <h1 class="mb-4">Submit Your Information</h1>
+
+        <!-- Progress Indicator -->
+        <div class="steps-indicator mb-4" >
+            Step <span id="currentStep">{{this.step}}</span> of 5
+        </div>
+    </div>
+    
+
+    <!-- Multi-Step Form Start -->
+    <form [formGroup]="form" novalidate>
+        <div id="step1" class="form-step" >
+            <div class="form-group" *ngIf="step == 1">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" formControlName="email">
+                <span 
+                *ngIf="(validData['email']?.dirty || validData['email']?.touched) || (validData['email']?.status === 'INVALID' && isNextClicked)">
+                    <span *ngIf="validData['email'].errors?.['required']" class="text-danger"> Email address is required</span>
+                    <span *ngIf="validData['email'].errors?.['email'] || validData['email'].errors?.['pattern']" class="text-danger">
+                        Please use a valid email address
+                    </span>
+                </span>
+            </div>
+            <div class="form-group" *ngIf="step == 2" >
+                <label for="instagramScreenshot">Instagram Screenshot:</label>
+                <input type="file" class="form-control-file" id="instagramScreenshot" name="instagramScreenshot" (change)="onFileSelected($event, 'instra')">
+                <span *ngIf="isInstraFileError" class="text-danger">Instagram Screenshot is required</span>
+                <span *ngIf="errorMessage != ''" class="text-danger">{{errorMessage}}</span>
+                <span *ngIf="isSubmitting" style="color: blue; font-weight: bold;">Please wait while we verify your Instagram handle...</span>
+            </div>
+            <div class="form-group" *ngIf="step == 3">
+                <label>YouTube Username:</label>
+                <input type="url" class="form-control" name="youtubeUserName" formControlName="youtubeUserName">
+                <span 
+                *ngIf="(validData['youtubeUserName']?.dirty || validData['youtubeUserName']?.touched) || (isNextClicked && validData['youtubeUserName']?.status === 'INVALID')">
+                    <span *ngIf="validData['youtubeUserName'].errors?.['required']" class="text-danger">
+                    Youtube username is required!
+                    </span>
+                </span>
+                <span *ngIf="errorMessage != ''" class="text-danger">{{errorMessage}}</span>
+                <!-- <label for="youtubeScreenshot">YouTube Screenshot:</label>
+                <input type="file" class="form-control-file" id="youtubeScreenshot" name="youtubeScreenshot" (change)="onFileSelected($event, 'yt')">
+                <span *ngIf="isYtFileError" class="text-danger">Youtube Screenshot is required</span> -->
+            </div>
+            <div class="form-group" *ngIf="step == 4">
+                <label for="youtubeCommentScreenshot">YouTube Comment Screenshot:</label>
+                <input type="file" class="form-control-file" id="youtubeCommentScreenshot" name="youtubeCommentScreenshot" (change)="onFileSelected($event, 'ytc')">
+                <span *ngIf="isYtcFileError" class="text-danger">Youtube comment Screenshot is required</span>
+            </div>
+            <div class="form-group" *ngIf="step == 5">
+                <label for="youtubeUrl">YouTube URL:</label>
+                <input type="url" class="form-control" id="youtubeUrl" name="youtubeUrl" formControlName="youtubeUrl">
+                <span 
+                *ngIf="(validData['youtubeUrl']?.dirty || validData['youtubeUrl']?.touched) || (isNextClicked && validData['youtubeUrl']?.status === 'INVALID')">
+                    <span *ngIf="validData['youtubeUrl'].errors?.['required']" class="text-danger">
+                    Youtube url is required!
+                    </span>
+                    <span *ngIf="validData['youtubeUrl'].errors?.['youtubeUrl'] || validData['youtubeUrl'].errors?.['pattern']" class="text-danger">
+                        Please use a valid youtube url
+                    </span>
+                </span>
+            </div>
+            
+            <!-- <span 
+                *ngIf="validData.['email'].invalid && (validData.email.dirty || validData.email.touched) && validData.email.errors?.required"
+                class="alert-danger-text"> Email is required!
+            </span> -->
+            <div *ngIf="step <= 5">
+                <button type="button" class="btn btn-secondary" (click)="back()" *ngIf="step != 1" style="margin-right: 10px;">Back</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()" *ngIf="!isSubmitting">{{step == 5 ? 'Submit' : 'Next'}}</button>
+                <button class="btn btn-primary" *ngIf="isSubmitting"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></button>
+                
+            </div>
+        </div>
+    </form>
+    <!-- Make a thank you message -->
+    <div class="form-step" *ngIf="step == 6 && isalreadyFillup == false">
+        <h2>Thank you for submitting your information!</h2>
+    </div>
+    <div class="form-step" *ngIf="step == 6 && isalreadyFillup == true">
+        <h2>Form already filled. Thank you for your submission!</h2>
+    </div>
+</div>
+
+
