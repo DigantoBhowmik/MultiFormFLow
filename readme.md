@@ -1,5 +1,5 @@
 # Multi-Step Form with Django and Angular
-This is a client project that I received from Upwork. I have to create a multi-step form with Django and Angular. The form will collect data from users and validate the data using Instagram and YouTube APIs. The form will have multiple steps and the user should be able to save the progress and continue later. The form will have the following steps:
+This is a client project that I received from Upwork. I have to create a multi-step form with Django and Angular. The form will collect data from users and validate the data. The form will have multiple steps and the user should be able to save the progress and continue later. The form will have the following steps:
 
 #### Step 1: Setup Django Backend
 
@@ -22,7 +22,8 @@ This is a client project that I received from Upwork. I have to create a multi-s
 
 1. Show an example screenshot for Instagram.
 2. Implement image upload, process using EasyOCR for text recognition.
-3. Validate the Instagram username by checking the database and follower status.
+3. Validate the Instagram username already store in database or not.
+4. Validate that person actually follow their Id or not.
 
 #### Step 5: YouTube Username Validation
 
